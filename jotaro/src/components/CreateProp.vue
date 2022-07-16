@@ -263,7 +263,7 @@ export default{
                         //     return response.json();
                         // })
                         .then(
-                            console.log('CREATE PROP REQ WAS SAND')
+                            console.log('CREATE PROP REQ WAS SENT')
                         )
                 } 
         }
