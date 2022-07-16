@@ -1,0 +1,11 @@
+insert into positions (posname) values ('начальник отдела');
+insert into positions (posname) values ('зам. начальника отдела');
+insert into positions (posname) values ('инженер');
+insert into departments (depname) values ('ПОА');
+insert into departments (depname) values ('ПОЭКС');
+insert into departments (depname) values ('САиМО');
+insert into departments (depname) values ('ООКС');
+insert into offices (offname) values ('Администрация');
+insert into offices (offname) values ('ИТЦ');
+insert into roles (rname) values ('adm');
+insert into roles (rname) values ('usr');
