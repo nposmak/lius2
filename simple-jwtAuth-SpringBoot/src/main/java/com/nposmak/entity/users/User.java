@@ -79,6 +79,10 @@ public class User {
 		}
 		return false;
 	}
+	
+	public String fullNameShort() {
+		return this.sname+" "+this.name.substring(0, 1)+"."+this.fname.substring(0, 1)+".";
+	}
 
 
 	

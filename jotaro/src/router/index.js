@@ -5,14 +5,16 @@ import TitlePage from '../components/TitlePage.vue'
 import LogIn from '../components/LogIn.vue'
 import RegUser from '../components/RegUser.vue'
 import CreateProp from '../components/CreateProp.vue'
+import MyProps from '../components/MyProps.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {path: '/', component: TitlePage},
-  { path: '/login', component: LogIn },
+  {path: '/login', component: LogIn },
   {path: '/register', component: RegUser},
-  {path:'/prop/new', component: CreateProp}
+  {path:'/prop/new', component: CreateProp},
+  {path:'/prop/myprops', component: MyProps}
 
   // {
   //   path: '/about',

@@ -3,6 +3,8 @@ package com.nposmak.entity.proposals;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,13 +18,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nposmak.entity.users.User;
 
 import lombok.Data;
 
 @Table(name="proposal")
 @Entity
-//@Data
+@Data
 public class Proposal {
 	
 	@Id
@@ -30,38 +33,35 @@ public class Proposal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(cascade= CascadeType.REFRESH)
+	@OneToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "author_id")
 	private User author;
 	
 	@Column(name="prop_date")
 	private Date propDate;
 	
-	@ManyToOne(cascade= CascadeType.REFRESH)
+	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "gpa_id")
 	private Gpa gpa;
 	
-	@ManyToOne(cascade= CascadeType.REFRESH)
+	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "gtu_id")
 	private Gtu gtu;
 	
-	@ManyToOne(cascade= CascadeType.REFRESH)
+	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "cbn_id")
 	private Cbn cbn;
 	
 	@Column(name="description")
 	private String description;
 	
-	@ManyToOne(cascade= CascadeType.REFRESH)
+	@ManyToOne(cascade= CascadeType.ALL)
 	@JoinColumn(name = "status_id")
 	private PropStatus status;
 	
-	@OneToMany(cascade = CascadeType.REFRESH,  mappedBy = "proposal")
+	//@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL,  mappedBy = "proposal")
 	private List<PropConfirm> confirmList;
-	
-//	private List<PropComment> commentList;
-//	
-//	private List <PropDesicion> desicionList;
 	
 	
 	public void addPropToConfirmList (PropConfirm propConfirm) {
@@ -72,10 +72,30 @@ public class Proposal {
 		propConfirm.setProposal(this);
 		
 	}
-//GETERS SETERS CONSTRUCTOR
+	
+	public String getConfListUsersDesicions() {
+		String users ="";
+		for (PropConfirm c : this.confirmList) {
+			users =users +  c.getCoordinator().getSname()+" "
+					+c.getCoordinator().getName().substring(0, 1)+"."
+					+c.getCoordinator().getFname().substring(0, 1)+"."+" - ";
+			try {
+				Optional<Boolean> opt  = Optional.ofNullable(c.getDesicion());
+				if(opt.get().equals(true)) {
+					users = users + "согласовано"+";   ";
+				} else if(opt.get().equals(false)) {
+					users = users+"оклонено"+";   ";
+				}
+			}catch(NoSuchElementException e) {
+				System.out.println("I know this is bad desicion...but who cares...");
+			}
+			users = users+"рассмотрение"+";   ";
+		}
+		return users;
+	}
+//GETTERS SETTERS CONSTRUCTOR
 	public Proposal(Long id, User author, Date propDate, Gpa gpa, Gtu gtu, Cbn cbn, String description, PropStatus status,
 			List<PropConfirm> confirmList) {
-		super();
 		this.id = id;
 		this.author = author;
 		this.propDate = propDate;

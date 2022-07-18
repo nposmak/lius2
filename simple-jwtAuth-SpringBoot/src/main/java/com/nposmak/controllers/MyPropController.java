@@ -1,5 +1,6 @@
 package com.nposmak.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nposmak.entity.proposals.Cbn;
 import com.nposmak.entity.proposals.Gpa;
 import com.nposmak.entity.proposals.Gtu;
+import com.nposmak.entity.proposals.PropConfirm;
 import com.nposmak.entity.proposals.PropStatus;
 import com.nposmak.entity.proposals.Proposal;
 import com.nposmak.entity.users.User;
 import com.nposmak.exceptions.UserEmailNotFoundException;
+import com.nposmak.repository.proposals.PropConfirmRepo;
 import com.nposmak.repository.proposals.ProposalRepo;
 import com.nposmak.repository.users.UserRepo;
 import com.nposmak.security.JwtUtils;
@@ -35,9 +38,13 @@ public class MyPropController {
 	private ProposalRepo propRepo;	
 	
 	@Autowired
+	private PropConfirmRepo confirmRepo;
+	
+	@Autowired
 	private UserRepo userRepo;
 	
-	record MyPropResponse(Long id, User author, Date date, Gpa gpa, Gtu gtu, Cbn cbn, String description, /**List<PropConfirm> confirmlist,*/ PropStatus status) {}
+	//record MyPropResponse(Long id, User author, Date date, Gpa gpa, Gtu gtu, Cbn cbn, String description, List<PropConfirm> confirmlist, PropStatus status) {}
+	record MyPropResponse(Long id, String authorFullName, String date, String gpa, String gtu, String cbn, String description, String status, String confList) {}
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/myprops")
 	public List<MyPropResponse> getProps(@RequestHeader("Authorization") String tokenHeader) throws Exception {
@@ -48,19 +55,56 @@ public class MyPropController {
 		List<Proposal> propList = propRepo.findAllByAuthor(user);
 		List<MyPropResponse> response = new ArrayList<MyPropResponse>();
 		
+		String pattern = " dd-MM-yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		
 		propList.stream().forEach(prop->response.add(new MyPropResponse(
 				prop.getId(),
-				prop.getAuthor(),
-				prop.getPropDate(),
-				prop.getGpa(),
-				prop.getGtu(),
-				prop.getCbn(),
+				prop.getAuthor().fullNameShort(),
+				simpleDateFormat.format(prop.getPropDate()),
+				prop.getGpa().getGpaName(),
+				prop.getGtu().getGtuName(),
+				prop.getCbn().getCbnName(),
 				prop.getDescription(),
-				prop.getStatus()
-//				prop.getConfirmList()
+				prop.getStatus().getStatus(),
+				prop.getConfListUsersDesicions()
 				)));
 
 		return response;
 	}
+	
+	@GetMapping("/myprops/toconfirm")
+	public List<MyPropResponse> getPropsToConfirm (@RequestHeader("Authorization") String tokenHeader) throws Exception{
+		String token = tokenHeader.substring(7);
+		String email = jwtUtils.getUserEmailFromJwtToken(token);
+		User user = userRepo.findByEmail(email).orElseThrow(()-> new UserEmailNotFoundException("User with email = "+email+" not exist!"));
+		
+		List<PropConfirm> confirmList = confirmRepo.findByCoordinator(user);
+		List<Proposal> propList = new ArrayList<>();
+		confirmList.stream().forEach(c->propList.add(c.getProposal()));
+		
+		String pattern = " dd-MM-yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		
+		List<MyPropResponse> response = new ArrayList<MyPropResponse>();
+		propList.stream().forEach(prop->response.add(new MyPropResponse(
+				prop.getId(),
+				prop.getAuthor().fullNameShort(),
+				simpleDateFormat.format(prop.getPropDate()),
+				prop.getGpa().getGpaName(),
+				prop.getGtu().getGtuName(),
+				prop.getCbn().getCbnName(),
+				prop.getDescription(),
+				prop.getStatus().getStatus(),
+				prop.getConfListUsersDesicions()
+				)));
+		return response;
+	}
 
 }
+
+
+
+
+
+

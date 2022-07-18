@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nposmak.entity.users.User;
 
 import lombok.Data;
@@ -26,14 +27,15 @@ public class PropConfirm {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	//@JsonManagedReference
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "proposal_id")
 	private Proposal proposal;
 	
 	@Column(name="confirm_date")
 	private Date confDate;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "coordinator_id")
 	private User coordinator;
 	
@@ -43,7 +45,12 @@ public class PropConfirm {
 	@Column(name = "desicion")
 	private Boolean desicion;
 
+	//GETTERS SETERS CONSTRUCTOR
 	public PropConfirm() {
+	}
+	
+	public PropConfirm(User coordinator) {
+		this.coordinator = coordinator;
 	}
 	
 	public PropConfirm(Long id, Proposal proposal, Date confDate, User coordinator, String message, Boolean desicion) {

@@ -5,10 +5,11 @@
     <div class="sidenav">
       <h4 style=" padding: 6px 8px 6px 16px;">Jojo's Adventures</h4>
       <hr>
-      <router-link to="/">Main</router-link>
+      <router-link to="/">Jojo</router-link>
       <router-link to="/login">LOGIN</router-link>
       <router-link to="/register">REGISTER</router-link>
       <router-link to="/prop/new">Создать предложение</router-link>
+      <router-link to="/prop/myprops">My Props</router-link>
     </div>
 
     <!-- Page content -->
