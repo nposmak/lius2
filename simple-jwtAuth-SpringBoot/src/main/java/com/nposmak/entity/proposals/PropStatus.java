@@ -11,13 +11,13 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="propstatus")
+@Table(name="status")
 public class PropStatus {
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="statusName")
+	@Column(name="statusname")
 	private String status;
 
 }

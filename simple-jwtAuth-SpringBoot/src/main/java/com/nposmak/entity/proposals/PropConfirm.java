@@ -18,7 +18,7 @@ import lombok.Data;
 
 @Table(name="propconfirm")
 @Entity
-@Data
+//@Data
 public class PropConfirm {
 	
 	@Id
@@ -30,7 +30,7 @@ public class PropConfirm {
 	@JoinColumn(name = "proposal_id")
 	private Proposal proposal;
 	
-	@Column(name="confirmDate")
+	@Column(name="confirm_date")
 	private Date confDate;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
@@ -54,6 +54,56 @@ public class PropConfirm {
 		this.message = message;
 		this.desicion = desicion;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Proposal getProposal() {
+		return proposal;
+	}
+
+	public void setProposal(Proposal proposal) {
+		this.proposal = proposal;
+	}
+
+	public Date getConfDate() {
+		return confDate;
+	}
+
+	public void setConfDate(Date confDate) {
+		this.confDate = confDate;
+	}
+
+	public User getCoordinator() {
+		return coordinator;
+	}
+
+	public void setCoordinator(User coordinator) {
+		this.coordinator = coordinator;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public Boolean getDesicion() {
+		return desicion;
+	}
+
+	public void setDesicion(Boolean desicion) {
+		this.desicion = desicion;
+	}
+	
+	
 	
 
 	

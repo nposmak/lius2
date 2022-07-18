@@ -1,13 +1,13 @@
 create table status(
     id serial,
-    statusName varchar (150),
+    statusname varchar (150),
     primary key (id)
 );
 
 create table proposal(
 	id serial,
     author_id int,
-    propDate varchar (150),
+    prop_date date,
     gpa_id int,
     gtu_id int,
     cbn_id int,
@@ -24,7 +24,7 @@ create table proposal(
 create table propconfirm(
 	id serial,
 	proposal_id int,
-    confirmDate varchar (150),
+    confirm_date date,
     message varchar (200),
 	coordinator_id int,
 	desicion boolean,

@@ -13,12 +13,10 @@ import com.nposmak.entity.users.Department;
 import com.nposmak.entity.users.Office;
 import com.nposmak.entity.users.Position;
 import com.nposmak.entity.users.Role;
-import com.nposmak.entity.users.User;
 import com.nposmak.repository.users.DepartRepo;
 import com.nposmak.repository.users.OfficeRepo;
 import com.nposmak.repository.users.PositRepo;
 import com.nposmak.repository.users.RoleRepo;
-import com.nposmak.repository.users.UserRepo;
 
 @RestController
 @RequestMapping("/get-all")
@@ -36,9 +34,6 @@ public class GetFieldsForUserSignUp {
 	
 	@Autowired
 	private RoleRepo roleRepo;
-	
-	@Autowired
-	private UserRepo userRepo;
 	
 	record getOffResponse(Long id, String offName) {}
 	@GetMapping("/office")
