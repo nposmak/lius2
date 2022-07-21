@@ -143,7 +143,7 @@ public class MyPropController {
 				);
 	}
 	
-	record AcceptRequest(String confirmMess) {}
+	record AcceptRequest(String message) {}
 	record AcceptResponse(String message) {}
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/myprops/toconfirm/{propId}/accept")
@@ -160,14 +160,14 @@ public class MyPropController {
 		
 		confirmProp.setDesicion(true);
 		confirmProp.setConfDate(date);
-		confirmProp.setMessage((req.confirmMess != null) ? req.confirmMess : "Согласовано.");
+		confirmProp.setMessage((req.message == null) ? "Согласовано." : req.message);
 		
 		confirmRepo.save(confirmProp);
 		
 		return new AcceptResponse("предложение согласованно пользователем " + user.fullNameShort());
 	}
 	
-	record RejectRequest(String rejectMess) {}
+	record RejectRequest(String message) {}
 	record RejectResponse(String message) {}
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping("/myprops/toconfirm/{propId}/reject")
@@ -184,7 +184,7 @@ public class MyPropController {
 		
 		confirmProp.setDesicion(false);
 		confirmProp.setConfDate(date);
-		confirmProp.setMessage((req.rejectMess != null) ? req.rejectMess : "Отклонено.");
+		confirmProp.setMessage((req.message == null) ? "Отклонено." :  req.message);
 		
 		confirmRepo.save(confirmProp);
 		

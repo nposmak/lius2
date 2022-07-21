@@ -78,18 +78,20 @@ public class Proposal {
 		for (PropConfirm c : this.confirmList) {
 			usersDesicions =usersDesicions +  c.getCoordinator().getSname()+" "
 					+c.getCoordinator().getName().substring(0, 1)+"."
-					+c.getCoordinator().getFname().substring(0, 1)+"."+" - ";
+					+c.getCoordinator().getFname().substring(0, 1)+"."+" - "+" рассмотрение; ";
 			try {
 				Optional<Boolean> opt  = Optional.ofNullable(c.getDesicion());
 				if(opt.get().equals(true)) {
-					usersDesicions = usersDesicions + "согласовано"+";   ";
+					usersDesicions = usersDesicions.substring(0, usersDesicions.length()-15);
+					usersDesicions = usersDesicions  + "согласовано; ";
 				} else if(opt.get().equals(false)) {
-					usersDesicions = usersDesicions+"оклонено"+";   ";
+					usersDesicions = usersDesicions.substring(0, usersDesicions.length()-15);
+					usersDesicions = usersDesicions+"отклонено; ";
 				}
 			}catch(NoSuchElementException e) {
 				System.out.println("I know this is bad desicion...but who cares...");
 			}
-			usersDesicions = usersDesicions+"рассмотрение"+";   ";
+			
 		}
 		return usersDesicions;
 	}
