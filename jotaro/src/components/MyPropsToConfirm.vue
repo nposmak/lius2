@@ -1,18 +1,19 @@
 <template>
     <section style="margin-right: 16%;">
-    <h4>Список моих предложений:</h4>
+    <h4>Список предложений на согласование:</h4>
         <div>
             <b-table hover bordered style=" font-size: smaller;" :items="props" :fields=" propsTableColumns">
-                <template v-slot:cell(open)>
-                    <button class="open-btn">Open</button>
+                <template v-slot:cell(open)="item">
+                    <button class="open-btn" @click="goToConfirmForm(item)">Open</button>
                 </template>  
             </b-table>
                                 
         </div>
-    </section>
+    </section>    
 </template>
 
 <script>
+import router from '@/router';
 
     export default{
         data(){
@@ -33,7 +34,7 @@
         },
         methods:{
             getMyProps(){
-                fetch('http://example.com:8080/sec/myprops',{
+                fetch('http://example.com:8080/sec/myprops/toconfirm',{
                     method:'GET',
                     headers : {"Content-Type" : "application/json; charset=utf-8",
                         'Authorization': 'Bearer '+ localStorage.getItem('token')}
@@ -46,6 +47,12 @@
                     this.props = response;
                 })
                    
+            },
+            goToConfirmForm(item){
+                const pathVar = item.item.id;
+                // console.log(pathVar);
+                router.push('/prop/myprops/toconfirm/' +pathVar);
+
             }
 
         },
@@ -53,6 +60,7 @@
             this.getMyProps();
         }
     }
+
 </script>
 
 <style scoped>

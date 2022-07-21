@@ -6,6 +6,8 @@ import LogIn from '../components/LogIn.vue'
 import RegUser from '../components/RegUser.vue'
 import CreateProp from '../components/CreateProp.vue'
 import MyProps from '../components/MyProps.vue'
+import MyPropsToConfirm from '../components/MyPropsToConfirm.vue'
+import ConfirmProp from '../components/ConfirmProp.vue'
 
 Vue.use(VueRouter)
 
@@ -14,7 +16,9 @@ const routes = [
   {path: '/login', component: LogIn },
   {path: '/register', component: RegUser},
   {path:'/prop/new', component: CreateProp},
-  {path:'/prop/myprops', component: MyProps}
+  {path:'/prop/myprops', component: MyProps},
+  {path:'/prop/myprops/toconfirm', component: MyPropsToConfirm},
+  {path: '/prop/myprops/toconfirm/:propId', component: ConfirmProp}
 
   // {
   //   path: '/about',

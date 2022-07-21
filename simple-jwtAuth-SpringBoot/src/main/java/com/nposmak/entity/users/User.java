@@ -84,7 +84,10 @@ public class User {
 		return this.sname+" "+this.name.substring(0, 1)+"."+this.fname.substring(0, 1)+".";
 	}
 
-
+	public String fullNameShortAndOffice() {
+		return this.sname+" "+this.name.substring(0, 1)+"."+this.fname.substring(0, 1)+"."+" - "+this.position.getPosName()+" "
+				+this.department.getDepName()+", "+this.office.getOffName();
+	}
 	
 
 	

@@ -27,7 +27,7 @@ public class PropConfirm {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	//@JsonManagedReference
+	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "proposal_id")
 	private Proposal proposal;

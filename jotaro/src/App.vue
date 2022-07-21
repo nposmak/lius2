@@ -9,7 +9,8 @@
       <router-link to="/login">LOGIN</router-link>
       <router-link to="/register">REGISTER</router-link>
       <router-link to="/prop/new">Создать предложение</router-link>
-      <router-link to="/prop/myprops">My Props</router-link>
+      <router-link to="/prop/myprops">Мои предложения</router-link>
+      <router-link to="/prop/myprops/toconfirm">На согласование</router-link>
     </div>
 
     <!-- Page content -->

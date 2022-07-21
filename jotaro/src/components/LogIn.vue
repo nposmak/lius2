@@ -1,7 +1,7 @@
 <template>
     <section>
       <h4>Войти в систему:</h4>
-    <form @submit.prevent="loginUser">
+    <form @submit="loginUser">
         <div class="mb-3 row">
             <label for="inpEmail" class="col-sm-3 col-form-label" style="text-align: right;">Почта:</label>
             <div class="col-sm-8">

@@ -9,5 +9,6 @@ import com.nposmak.entity.users.User;
 
 public interface ProposalRepo extends CrudRepository<Proposal, Long>{
 	List<Proposal> findAllByAuthor(User user);
+	
 
 }

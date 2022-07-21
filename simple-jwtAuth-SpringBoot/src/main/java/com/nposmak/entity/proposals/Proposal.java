@@ -59,7 +59,7 @@ public class Proposal {
 	@JoinColumn(name = "status_id")
 	private PropStatus status;
 	
-	//@JsonBackReference
+	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL,  mappedBy = "proposal")
 	private List<PropConfirm> confirmList;
 	
@@ -74,24 +74,24 @@ public class Proposal {
 	}
 	
 	public String getConfListUsersDesicions() {
-		String users ="";
+		String usersDesicions ="";
 		for (PropConfirm c : this.confirmList) {
-			users =users +  c.getCoordinator().getSname()+" "
+			usersDesicions =usersDesicions +  c.getCoordinator().getSname()+" "
 					+c.getCoordinator().getName().substring(0, 1)+"."
 					+c.getCoordinator().getFname().substring(0, 1)+"."+" - ";
 			try {
 				Optional<Boolean> opt  = Optional.ofNullable(c.getDesicion());
 				if(opt.get().equals(true)) {
-					users = users + "согласовано"+";   ";
+					usersDesicions = usersDesicions + "согласовано"+";   ";
 				} else if(opt.get().equals(false)) {
-					users = users+"оклонено"+";   ";
+					usersDesicions = usersDesicions+"оклонено"+";   ";
 				}
 			}catch(NoSuchElementException e) {
 				System.out.println("I know this is bad desicion...but who cares...");
 			}
-			users = users+"рассмотрение"+";   ";
+			usersDesicions = usersDesicions+"рассмотрение"+";   ";
 		}
-		return users;
+		return usersDesicions;
 	}
 //GETTERS SETTERS CONSTRUCTOR
 	public Proposal(Long id, User author, Date propDate, Gpa gpa, Gtu gtu, Cbn cbn, String description, PropStatus status,
